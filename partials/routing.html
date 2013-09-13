@@ -1,0 +1,27 @@
+<div controller="routing">
+  <h2>Routing</h2>
+  <p>
+    <span class="important">No controllers are needed</span> to configure your routes, just define a template and that's it!
+  </p>
+    <pre>
+app.route([
+  { path: '/', template: '/templates/home.html' },
+  { path: '/routing', template: '/templates/routing.html' },
+  { path: '/databinding', template: '/templates/databinding.html' },
+  { path: '/templates', template: '/templates/templates.html' }
+]);</pre><br/>
+<h2>The &lt;view&gt; tag</h2>
+  <p>
+    Add the <span class="important">&lt;view&gt;</span> tag to render your views.
+  </p>
+<pre>
+&lt;body&gt;
+  &lt;ul class="my-nav"&gt;
+    &lt;li&gt;&lt;a href="/home"&gt;Home&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;div class="container"&gt;
+    <span class="important">&lt;view&gt;&lt;/view&gt;</span>
+  &lt;/div&gt;
+&lt;/body&gt;
+</pre>
+</div>

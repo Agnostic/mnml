@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>MNML.js</title>
+    <meta charset="utf-8" />
+    <link href='http://fonts.googleapis.com/css?family=Quattrocento' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/app.css"/>
+  </head>
+  <body>
+    <header>
+      <h1>MNML</h1>
+      <span>Web applications made easy</span>
+      <a href="https://github.com/agnostic" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    </header>
+    <section class="nav" controller="nav">
+      <ul class="nav">
+        <li if-class="{ active: page == 'home' }">
+          <a href='/'>About</a>
+        </li>
+        <li if-class="{ active: page == 'routing' }">
+          <a href='/routing'>Routing</a>
+        </li>
+        <li if-class="{ active: page == 'databinding' }">
+          <a href='/databinding'>Databinding</a>
+        </li>
+        <li if-class="{ active: page == 'templates' }">
+          <a href='/templates'>Templates</a>
+        </li>
+      </ul>
+    </section>
+    <section class="container">
+      <view></view>
+    </section>
+    <div class='clear'></div>
+    <footer>
+      MNML by <a href="mailto:avalosagnostic@gmail.com">Gilberto Avalos</a>
+    </footer>
+    <script type="text/javascript" src="/lib/mnml.js"></script>
+    <script type="text/javascript" src="/app/app.js"></script>
+  </body>
+</html>

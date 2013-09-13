@@ -1,0 +1,31 @@
+<div controller="databinding">
+  <h2>Databinding</h2>
+  <div class='form-test'>
+    <div class="field">
+      <label>Hello {{ name }}!</label>
+      <input type="text" model="name"></input>
+    </div>
+    <div class="field">
+      <label>Boolean</label>
+      <input type="checkbox" model="boolean"></input>
+    </div>
+    <div class="field">
+      <label>Select</label>
+      <select model="select">
+        <option value="1">First Value</option>
+        <option value="2">Second Value</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Radio</label>
+      <input type="radio" name="radio" model="radio" value="1">
+      <input type="radio" name="radio" model="radio" value="2">
+      <input type="radio" name="radio" model="radio" value="3">
+    </div>
+    <div class="field">
+      <label>Textarea</label>
+      <textarea model="textarea">
+      </textarea>
+    </div>
+  </div>
+</div>
