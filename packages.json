@@ -1,0 +1,8 @@
+{
+  "name": "MNML.js Example",
+  "description": "MNML.js - A minimalist MVC framework",
+  "author": "Gilberto Avalos <avalosagnostic@gmail.com>",
+  "dependencies": {
+    "express": "*"
+  }
+}
