@@ -46,7 +46,7 @@ app.controller('params', function(name){
 
 ## Views & Databinding
 ### Databinding
-Para asignar una propiedad del controlador a la vista, utilice: {{ property }}.
+To assign a property of the controller to a view, use: {{ property }}.
 
 /templates/params.html
 ```html
