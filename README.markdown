@@ -126,7 +126,7 @@ app.controller('about', function(){
 });
 ```
 ### removeEvent
-Use removeEvent to remove a event.
+Use removeEvent to remove an event.
 ```javascript
 app.removeEvent('changePage');
 ```
