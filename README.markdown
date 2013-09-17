@@ -5,10 +5,12 @@ _Minimalistic MVC framework for javascript web applications_
 ## Creating Application
 ```html
 <body>
-  <view></view>;
+  <view></view> <--! Templates will be rendered here -->
+  <script src="/app/app.js"></script>
 </body>
 ```
 
+app.js
 ```javascript
 var app = new MNML();
 ```
