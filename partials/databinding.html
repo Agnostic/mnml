@@ -27,5 +27,23 @@
       <textarea model="textarea">
       </textarea>
     </div>
+    <div class="field">
+      <label>Source</label>
+<pre>app.controller('databinding', function($name){
+  var self      = this;
+  this.name     = $name || 'World';
+  this.boolean  = true;
+  this.radio    = 2;
+  this.select   = 2;
+  this.textarea = "Hello Textarea";
+
+  watch(self, function(){
+    console.log('Watch', self.name);
+  });
+
+  app.fireEvent('setPage', 'databinding');
+});
+</pre>
+    </div>
   </div>
 </div>

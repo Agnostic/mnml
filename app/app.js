@@ -3,7 +3,7 @@ var app = new MNML();
 app.route([
   { path: '/', template: '/partials/home.html' },
   { path: '/routing', template: '/partials/routing.html', controller: 'routing' },
-  { path: '/databinding', template: '/partials/databinding.html' },
+  { path: '/databinding(/:name)?', template: '/partials/databinding.html' },
   { path: '/templates', template: '/partials/templates.html', controller: 'templates' }
 ]);
 
