@@ -18,6 +18,7 @@ var app = new MNML();
 ```
 
 ## Routers
+Use app.route to define your router, note that the controllers are optional.
 ```javascript
 app.route([
   { path: '/', template: '/templates/home.html' },
