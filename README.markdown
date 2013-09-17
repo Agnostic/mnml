@@ -44,7 +44,19 @@ app.controller('params', function(name){
 });
 ```
 
-## Views
+## Views & Databinding
+### Databinding
+Para asignar una propiedad del controlador a la vista, utilice: {{ property }}.
+
+/templates/params.html
+```html
+<div>
+  <input type="text" model="name"/>
+  Hello {{ name }}!
+</div>
+```
+
+
 ### Assigning a controller
 You can define a controller in a div using the controller directive, for example:
 ```html
@@ -60,5 +72,10 @@ The include directive allows to attach a view inside an element, example:
 ```
 
 ## Directives
+### if-class
+
+### if-class
 
 ## Events
+
+## Utilities
