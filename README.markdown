@@ -77,6 +77,15 @@ This directive receives an object as a parameter, where properties are the class
   <li if-class="{ active: status, inactive: !status }">Link</li>
 </ul>
 ```
+Equivalence in javascript, (So just a example):
+```javascript
+if (status) {
+  li.className = 'active';
+}
+if (!status) {
+  li.className = 'inactive';
+}
+```
 
 ## Events
 
