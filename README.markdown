@@ -87,6 +87,23 @@ if (!status) {
 }
 ```
 
+### foreach
+```javascript
+app.controller('nav', function(){
+  this.links = [
+    { title: 'Home', href: '/' }
+    { title: 'Another page', href: '/page' }
+  ];
+});
+```
+```html
+<ul class="nav">
+  <li foreach="link in links">
+    <a href="{{ link.href }}">{{ link.title }}</a>
+  </li>
+</ul>
+```
+
 ## Events
 
 ## Utilities
