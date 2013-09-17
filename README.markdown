@@ -125,5 +125,10 @@ app.controller('about', function(){
   app.fireEvent('changePage', 'about');
 });
 ```
+### removeEvent
+Use removeEvent to remove a event.
+```javascript
+app.removeEvent('changePage');
+```
 
 ## Utilities
