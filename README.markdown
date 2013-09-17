@@ -58,7 +58,7 @@ To assign a property of the controller to a view, use: {{ property }}.
 
 ## Directives
 ### Controller
-You can define a controller in a div using the controller directive, for example:
+You can assign a controller to a div using the controller directive, for example:
 ```html
 <div controller="params">
   Hello {{ name }}!
@@ -71,6 +71,12 @@ The include directive allows to attach a view inside an element, example:
 <div include="/templates/example.html"></div>
 ```
 ### if-class
+This directive receives an object as a parameter, where properties are the classes and the values ​​are the conditions.
+```html
+<ul class="nav">
+  <li if-class="{ active: status, inactive: !status }">Link</li>
+</ul>
+```
 
 ## Events
 
