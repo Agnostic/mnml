@@ -3,6 +3,12 @@
 _Minimalistic MVC framework for javascript web applications_
 
 ## Creating Application
+```html
+&gt;body&lt;
+  &gt;view&lt;&gt;/view&lt;
+&gt;/body&lt;
+```
+
 ```javascript
 var app = new MNML();
 ```
@@ -38,3 +44,5 @@ app.controller('home', function(){
 ## Views
 
 ## Directives
+
+## Events
