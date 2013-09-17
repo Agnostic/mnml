@@ -4,10 +4,12 @@ _Minimalistic MVC framework for javascript web applications_
 
 ## Creating Application
 ```html
-<body>
-  <view></view> <!-- Templates will be rendered here -->
-  <script src="/app/app.js"></script>
-</body>
+<html>
+  <body>
+    <view></view> <!-- Templates will be rendered here -->
+    <script src="/app/app.js"></script>
+  </body>
+</html>
 ```
 
 app.js
@@ -19,15 +21,13 @@ var app = new MNML();
 ```javascript
 app.route([
   { path: '/', template: '/templates/home.html' },
-  { path: '/routing', template: '/templates/routing.html' },
-  { path: '/databinding', template: '/templates/databinding.html' },
-  { path: '/templates', template: '/templates/templates.html' }
+  { path: '/hello/:name', template: '/templates/params.html', controller: 'params' }
 ]);
 ```
 
 ## Controllers
 
-### Appication controller
+### Application controller
 This controller is fired before any controller.
 
 ```javascript
@@ -38,8 +38,8 @@ app.appController(function(data){
 
 ### Single controller
 ```javascript
-app.controller('home', function(){
-  console.log( 'Hello controller' );
+app.controller('params', function(name){
+  console.log( 'Hello', name );
 });
 ```
 
