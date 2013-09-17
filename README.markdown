@@ -18,6 +18,17 @@ app.route([
 ```
 
 ## Controllers
+
+### Appication controller
+This controller is fired before any controller.
+
+```javascript
+app.appController(function(data){
+  console.log('Pre-controller', data);
+});
+```
+
+### Single controller
 ```javascript
 app.controller('home', function(){
   console.log( 'Hello controller' );
