@@ -18,6 +18,11 @@ app.route([
 ```
 
 ## Controllers
+```javascript
+app.controller('home', function(){
+  console.log( 'Hello controller' );
+});
+```
 
 ## Views
 
