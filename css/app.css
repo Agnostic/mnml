@@ -96,6 +96,11 @@ header span{
   margin-bottom: 3px;
 }
 
+.field input:focus, .field select:focus, .field textarea:focus{
+  outline: none;
+  background: #222;
+}
+
 .field input, .field select, .field textarea{
   background:#0F0F0F;
   color:white;
