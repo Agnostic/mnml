@@ -51,8 +51,8 @@ To assign a property of the controller to a view, use: {{ property }}.
 /templates/params.html
 ```html
 <div>
+  <h2>Hello {{ name }}!</h2>
   <input type="text" model="name"/>
-  Hello {{ name }}!
 </div>
 ```
 
