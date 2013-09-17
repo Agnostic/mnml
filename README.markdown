@@ -40,11 +40,24 @@ app.appController(function(data){
 ### Single controller
 ```javascript
 app.controller('params', function(name){
-  console.log( 'Hello', name );
+  this.name = name;
 });
 ```
 
 ## Views
+### Assigning a controller
+You can define a controller in a div using the controller directive, for example:
+```html
+<div controller="params">
+  Hello {{ name }}!
+</div>
+```
+
+### Include
+The include directive allows to attach a view inside an element, example:
+```html
+<div include="/templates/example.html"></div>
+```
 
 ## Directives
 
