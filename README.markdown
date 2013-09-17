@@ -105,5 +105,25 @@ app.controller('nav', function(){
 ```
 
 ## Events
+MNML has a mediator allowing us to use events in our application.
+### addEvent
+With addEvent we add our event and assign a callback.
+```javascript
+app.controller('nav', function(){
+  var self  = this;
+  self.page = 'home';
+
+  app.addEvent('changePage', function(page){
+    self.page = page;
+  });
+});
+```
+### fireEvent
+With fireEvent we execute our event and we send data as the second parameter.
+```javascript
+app.controller('about', function(){
+  app.fireEvent('changePage', 'about');
+});
+```
 
 ## Utilities
