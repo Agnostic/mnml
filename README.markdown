@@ -4,9 +4,9 @@ _Minimalistic MVC framework for javascript web applications_
 
 ## Creating Application
 ```html
-&gt;body&lt;
-  &gt;view&lt;&gt;/view&lt;
-&gt;/body&lt;
+<body>
+  <view></view>;
+</body>
 ```
 
 ```javascript
