@@ -2,7 +2,7 @@
 
 _Minimalistic MVC framework for javascript web applications_
 
-## Creating Application
+## Creating a new application
 ```html
 <html>
   <body>
