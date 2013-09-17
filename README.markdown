@@ -5,7 +5,7 @@ _Minimalistic MVC framework for javascript web applications_
 ## Creating Application
 ```html
 <body>
-  <view></view> <--! Templates will be rendered here -->
+  <view></view> <!-- Templates will be rendered here -->
   <script src="/app/app.js"></script>
 </body>
 ```
