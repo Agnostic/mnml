@@ -3,6 +3,12 @@
 _Minimalistic MVC framework for javascript web applications_
 
 ## Routers
+  `app.route([
+    { path: '/', template: '/templates/home.html' },
+    { path: '/routing', template: '/templates/routing.html' },
+    { path: '/databinding', template: '/templates/databinding.html' },
+    { path: '/templates', template: '/templates/templates.html' }
+  ]);`
 
 ## Controllers
 
