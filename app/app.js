@@ -8,7 +8,7 @@ app.route([
 ]);
 
 app.appController(function(data){
-  console.log('Pre-controller', data);
+  console.log('Pre-controller:', data);
 });
 
 app.controller('home', function(){
