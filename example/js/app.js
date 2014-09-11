@@ -1,4 +1,6 @@
-var app = new MNML();
+var app = new MNML({
+  basePath: '/example/'
+});
 
 app.route([
   { path: '/', template: 'partials/home.html' },
@@ -38,7 +40,7 @@ app.controller('databinding', function($name){
   this.select   = 2;
   this.textarea = "Hello Textarea";
 
-  watch(self, function(){
+  watch(self.name, function() {
     console.log('Watch', self.name);
   });
 

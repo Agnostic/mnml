@@ -24,7 +24,7 @@
   loadedRoute       = false,
   controllersQueue  = [],
   firePreController = false,
-  basePath          = '';
+  config;
 
   function has(obj, key) {
     return obj != null && hasOwnProperty.call(obj, key);
@@ -91,14 +91,13 @@
   }
 
   function loadTemplate(path, elm) {
-    if(!elm){ throw "loadTemplate failed: DOM Element not found"; return };
-    if(!path){ throw "loadTemplate failed: Path not found"; return };
+    if(!elm){ throw 'loadTemplate failed: DOM Element not found, elm: ' + path; return };
+    if(!path){ throw 'loadTemplate failed: Path not found, path: ' + path; return };
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', path, true);
     xhr.onload = function(){
       var template = this.responseText;
-
       template = template.replace( new RegExp( "\{\{\s*(.*)\s*\}\}", "gi" ), '<span model="$1"></span>' );
       template = template.replace(/'\s*/g, "'").replace(/"\s*/g, '"').replace(/\s*"/g, '"').replace(/\s*'/g, "'");
       elm.innerHTML = template;
@@ -114,19 +113,20 @@
   function parseModels(models, controller, args){
     forEach(models, function(item){
       var model = item.getAttribute('model');
+      var item_type = item.type && item.type.toUpperCase();
 
-      if( item.tagName !== 'INPUT' && item.tagName !== 'SELECT' ){
+      if (item.tagName !== 'INPUT' && item.tagName !== 'SELECT') {
         if(controller[model] !== item.innerHTML){
           item.innerHTML = controller[model] || '';
         }
-      } else if( item.tagName === 'INPUT' ) {
-        if( item.type.toUpperCase() === 'TEXT' ) {
+      } else if (item.tagName === 'INPUT') {
+        if (item_type === 'TEXT') {
           if(item.value != controller[model]){
             item.value = controller[model] || '';
           }
-        } else if ( item.type.toUpperCase() === 'CHECKBOX' ){
-          item.checked = controller[model] ? true : false;
-        } else if ( item.type.toUpperCase() === 'RADIO' ) {
+        } else if (item_type === 'CHECKBOX') {
+          item.checked = controller[model];
+        } else if ( item_type === 'RADIO' ) {
           item.checked = ( item.value == controller[model] ) ? true : false;
         }
       } else if ( item.tagName === 'TEXTAREA' || item.tagName === 'SELECT' ) {
@@ -136,14 +136,18 @@
       }
 
       if ( !item.onkeypress && ( item.tagName === 'TEXTAREA' || item.tagName === 'INPUT' ) ) {
-        item.onkeyup = function(e){
+        item.onkeyup = function() {
           controller[model] = item.value;
           parseDOMController.call(null, args);
         };
 
         if ( !item.onchange ){
-          item.onchange = function(){
-            controller[model] = item.value;
+          item.onchange = function() {
+            var value = item.value;
+            if (item_type === 'CHECKBOX' || item_type === 'RADIO') {
+              value = (item.checked) ? true : false;
+            }
+            controller[model] = value;
             parseDOMController.call(null, args);
           };
         }
@@ -225,9 +229,9 @@
         var href = link.getAttribute('href');
         if( href !== '#' ){
           link.onclick = function(e){
-            if (basePath) {
-              href = href.replace(basePath, '/');
-              href = basePath + href;
+            if (config.basePath) {
+              href = href.replace(config.basePath, '/');
+              href = config.basePath + href;
               href = href.replace('//', '/');
             }
             History.pushState({ url: href }, document.title, href );
@@ -250,17 +254,15 @@
     firePreController = false;
   }
 
-  var M = function() {
+  var M = function(_config) {
     var self          = this;
     self.controllers  = {};
     self.events       = {};
     self.routes       = [];
     self.init         = false;
     self.currentRoute = {};
-
-    if (location.pathname !== '/') {
-      basePath = location.pathname;
-    }
+    self.basePath     = _config.basePath;
+    config            = _config || {};
 
     var body = document.getElementsByTagName('body')[0];
 
@@ -397,8 +399,8 @@
           url2 += '/';
         }
 
-        if (basePath) {
-          url = url.replace(basePath, '/');
+        if (config.basePath) {
+          url = url.replace(config.basePath, '/');
         }
 
         if (regex.test(url) || regex.test(url2) && route.template) {
@@ -430,6 +432,9 @@
 
           self.currentRoute = route;
           loadedRoute       = true;
+        } else {
+          // Route not found (TODO)
+          console.warn('Route not found');
         }
       }
     }
