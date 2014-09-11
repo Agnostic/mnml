@@ -135,23 +135,30 @@
         }
       }
 
-      if (!item.onkeypress) {
-        item.onkeyup = function() {
-          controller[model] = item.value;
-          parseDOMController.call(null, args);
-        };
-
-        if ( !item.onchange ){
-          item.onchange = function() {
-            var value = item.value;
-            if (item_type === 'CHECKBOX') {
-              value = (item.checked) ? true : false;
-            }
-            controller[model] = value;
-            parseDOMController.call(null, args);
-          };
+      var updateValues = function() {
+        var value = item.value;
+        if (item_type === 'CHECKBOX') {
+          value = (item.checked) ? true : false;
         }
+        controller[model] = value;
+        parseDOMController.call(null, args);
+      };
+
+      if (!item.__binded) {
+        item.addEventListener('change', function() {
+          updateValues();
+        });
+
+        if (item.tagName === 'TEXTAREA' || item.tagName === 'INPUT') {
+          item.addEventListener('keydown', function() {
+            setTimeout(function(){
+              updateValues();
+            });
+          });
+        }
+        item.__binded = true;
       }
+
     });
   }
 
@@ -378,6 +385,7 @@
   M.prototype.checkRoutes = function() {
     var self = this;
 
+    var found_path = false;
     for (var i = 0; i < self.routes.length; i++) {
       var route = self.routes[i];
       if(self.currentRoute.path !== route.path){
@@ -403,6 +411,7 @@
         }
 
         if (regex.test(url) || regex.test(url2) && route.template) {
+          found_path = true;
           var params  = regex.exec(url) || [];
           temp_params = [];
 
@@ -431,11 +440,12 @@
 
           self.currentRoute = route;
           loadedRoute       = true;
-        } else {
-          // Route not found (TODO)
-          console.warn('Route not found');
         }
       }
+    }
+
+    if (!found_path) {
+      console.warn('Path not found');
     }
   };
 
