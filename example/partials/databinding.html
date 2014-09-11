@@ -10,14 +10,14 @@
       <input type="checkbox" model="boolean"></input>
     </div>
     <div class="field">
-      <label>Select</label>
+      <label>Select: {{ select }}</label>
       <select model="select">
         <option value="1">First Value</option>
         <option value="2">Second Value</option>
       </select>
     </div>
     <div class="field">
-      <label>Radio</label>
+      <label>Radio: {{ radio }}</label>
       <input type="radio" name="radio" model="radio" value="1">
       <input type="radio" name="radio" model="radio" value="2">
       <input type="radio" name="radio" model="radio" value="3">
@@ -26,6 +26,10 @@
       <label>Textarea</label>
       <textarea model="textarea">
       </textarea>
+      <div>
+        Textarea value: <br/>
+        {{ textarea }}
+      </div>
     </div>
     <div class="field">
       <label>Source</label>

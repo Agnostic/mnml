@@ -96,7 +96,7 @@
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', path, true);
-    xhr.onload = function(){
+    xhr.onload = function() {
       var template = this.responseText;
       template = template.replace( new RegExp( "\{\{\s*(.*)\s*\}\}", "gi" ), '<span model="$1"></span>' );
       template = template.replace(/'\s*/g, "'").replace(/"\s*/g, '"').replace(/\s*"/g, '"').replace(/\s*'/g, "'");
@@ -110,18 +110,18 @@
     return new factoryFunction();
   }
 
-  function parseModels(models, controller, args){
-    forEach(models, function(item){
+  function parseModels(models, controller, args) {
+    forEach(models, function(item) {
       var model = item.getAttribute('model');
       var item_type = item.type && item.type.toUpperCase();
 
       if (item.tagName !== 'INPUT' && item.tagName !== 'SELECT') {
-        if(controller[model] !== item.innerHTML){
+        if (controller[model] !== item.innerHTML) {
           item.innerHTML = controller[model] || '';
         }
       } else if (item.tagName === 'INPUT') {
         if (item_type === 'TEXT') {
-          if(item.value != controller[model]){
+          if (item.value != controller[model]) {
             item.value = controller[model] || '';
           }
         } else if (item_type === 'CHECKBOX') {
@@ -130,12 +130,12 @@
           item.checked = ( item.value == controller[model] ) ? true : false;
         }
       } else if ( item.tagName === 'TEXTAREA' || item.tagName === 'SELECT' ) {
-        if(controller[model] != item.value){
+        if (controller[model] != item.value) {
           item.value = controller[model] || '';
         }
       }
 
-      if ( !item.onkeypress && ( item.tagName === 'TEXTAREA' || item.tagName === 'INPUT' ) ) {
+      if (!item.onkeypress) {
         item.onkeyup = function() {
           controller[model] = item.value;
           parseDOMController.call(null, args);
@@ -144,7 +144,7 @@
         if ( !item.onchange ){
           item.onchange = function() {
             var value = item.value;
-            if (item_type === 'CHECKBOX' || item_type === 'RADIO') {
+            if (item_type === 'CHECKBOX') {
               value = (item.checked) ? true : false;
             }
             controller[model] = value;
@@ -319,12 +319,11 @@
   M.prototype.parseElement = function(element) {
     var self = this;
 
-    if( element.querySelectorAll ){
+    if (element.querySelectorAll) {
       bindLinks(element);
     }
 
-    if(element.getAttribute){
-
+    if (element.getAttribute) {
       var controller = element.getAttribute('controller');
       if(controller && self.controllers[controller]){
         self.initController(controller, true);
@@ -333,7 +332,7 @@
 
     if (element.querySelectorAll) {
       var includes = element.querySelectorAll('[include]');
-      if( includes.length ){
+      if (includes.length) {
         forEach(includes, function(include){
           var path = include.getAttribute('include');
           loadTemplate(path, include);
@@ -379,7 +378,7 @@
   M.prototype.checkRoutes = function() {
     var self = this;
 
-    for(var i = 0; i < self.routes.length; i++){
+    for (var i = 0; i < self.routes.length; i++) {
       var route = self.routes[i];
       if(self.currentRoute.path !== route.path){
         var namedParam = /:\w+/g,
@@ -391,7 +390,7 @@
 
         var url = History.getState().data.url || History.getState().hash, url2;
 
-        if( url[url.length-1] === '/' ){
+        if (url[url.length-1] === '/') {
           url2 = url;
           url2 = url2.replace(/\/$/, '');
         } else {
@@ -468,7 +467,7 @@
     self.controllers[name] = fn;
 
     var body = document.getElementsByTagName('body')[0];
-    var controllers = body.querySelectorAll("[controller='"+name+"']");
+    var controllers = body.querySelectorAll("[controller='" + name + "']");
     if( controllers.length ){
       forEach(controllers, function(controller){
         self.parseElement(controller);
