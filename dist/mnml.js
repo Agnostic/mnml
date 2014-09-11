@@ -379,7 +379,9 @@
           url2 += '/';
         }
 
-        url = url.replace(basePath, '/');
+        if (basePath) {
+          url = url.replace(basePath, '/');
+        }
 
         if( regex.test(url) || regex.test(url2) && route.template){
           var params  = regex.exec(url) || [];
