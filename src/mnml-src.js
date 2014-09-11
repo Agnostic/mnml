@@ -26,9 +26,9 @@
   firePreController = false,
   basePath          = '';
 
-  function has = function(obj, key) {
+  function has(obj, key) {
     return obj != null && hasOwnProperty.call(obj, key);
-  };
+  }
 
   function isObject(obj) {
     var type = typeof obj;
