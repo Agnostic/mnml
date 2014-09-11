@@ -19,11 +19,29 @@
 
   var ArrayProto    = Array.prototype,
   nativeForEach     = ArrayProto.forEach,
+  nativeKeys        = Object.keys,
   breaker           = {},
   loadedRoute       = false,
   controllersQueue  = [],
   firePreController = false,
   basePath          = '';
+
+  function has = function(obj, key) {
+    return obj != null && hasOwnProperty.call(obj, key);
+  };
+
+  function isObject(obj) {
+    var type = typeof obj;
+    return type === 'function' || type === 'object' && !!obj;
+  }
+
+  function getKeys(obj) {
+    if (!isObject(obj)) return [];
+    if (nativeKeys) return nativeKeys(obj);
+    var keys = [];
+    for (var key in obj) if (has(obj, key)) keys.push(key);
+    return keys;
+  };
 
   root.forEach = function(obj, iterator, context) {
     if (obj == null) return;
@@ -34,14 +52,14 @@
         if (iterator.call(context, obj[i], i, obj) === breaker) return;
       }
     } else {
-      var keys = _.keys(obj);
+      var keys = getKeys(obj);
       for (var i = 0, length = keys.length; i < length; i++) {
         if (iterator.call(context, obj[keys[i]], keys[i], obj) === breaker) return;
       }
     }
   };
 
-  function decode(string){
+  function decode(string) {
     string = string.replace(/%([EF][0-9A-F])%([89AB][0-9A-F])%([89AB][0-9A-F])/g,
       function(code,hex1,hex2,hex3){
         var n1= parseInt(hex1,16)-0xE0;
@@ -72,7 +90,7 @@
     return string;
   }
 
-  function loadTemplate(path, elm){
+  function loadTemplate(path, elm) {
     if(!elm){ throw "loadTemplate failed: DOM Element not found"; return };
     if(!path){ throw "loadTemplate failed: Path not found"; return };
 
@@ -133,7 +151,7 @@
     });
   }
 
-  function test(val1, val2){
+  function test(val1, val2) {
     if(val2){
       return val1 == val2;
     } else {
@@ -141,7 +159,7 @@
     }
   }
 
-  function parseClasses(classes, controller){
+  function parseClasses(classes, controller) {
     forEach(classes, function(item){
       var conditions = item.getAttribute('if-class').replace('{', '').replace('}', '').trim();
       conditions = conditions.split(',');
@@ -153,7 +171,7 @@
         _condition = condition[1].trim();
 
         var val;
-        if( _condition.match('=') ) {
+        if (_condition.match('=')) {
           var _condition = _condition.split('=');
           var val1, val2;
           forEach(_condition, function(item){
@@ -200,9 +218,9 @@
     parseClasses(classes, controller);
   }
 
-  function bindLinks(element){
+  function bindLinks(element) {
     var links = element.querySelectorAll('a');
-    if( links.length ){
+    if (links.length) {
       forEach(links, function(link){
         var href = link.getAttribute('href');
         if( href !== '#' ){
@@ -220,8 +238,8 @@
     }
   }
 
-  function preController(controller){
-    if(controller && typeof controller === 'function'){
+  function preController(controller) {
+    if (controller && typeof controller === 'function') {
       var data = {
         url: History.getState().data.url,
         controller: route.controller,
@@ -232,7 +250,7 @@
     firePreController = false;
   }
 
-  var M = function(){
+  var M = function() {
     var self          = this;
     self.controllers  = {};
     self.events       = {};
@@ -250,18 +268,18 @@
     bindLinks(body);
 
     // Add statechange listener for routes
-    History.Adapter.bind(root,'statechange', function(e){
+    History.Adapter.bind(root,'statechange', function(e) {
       self.checkRoutes();
     });
 
     // Listen for new elements
-    root.document.addEventListener('DOMNodeInserted', function(e){
+    root.document.addEventListener('DOMNodeInserted', function(e) {
       var element = e.srcElement;
       self.parseElement(element);
     }, false);
   };
 
-  M.prototype.addEvent = function(event, fn){
+  M.prototype.addEvent = function(event, fn) {
     var self = this;
     if(! self.events[event] ){
       self.events[event] = [];
@@ -269,34 +287,34 @@
     self.events[event].push({ context: self, callback: fn });
   };
 
-  M.prototype.fireEvent = function(event){
+  M.prototype.fireEvent = function(event) {
     var self = this;
 
     if ( !self.events[event] ){
       return false;
     }
 
-    for( var i = 0; i < self.events[event].length; i++ ){
+    for (var i = 0; i < self.events[event].length; i++) {
       var ev = self.events[event][i],
       args   = Array.prototype.slice.call( arguments, 1 );
       ev.callback.apply( ev.context, args );
     }
   };
 
-  M.prototype.removeEvent = function(event){
+  M.prototype.removeEvent = function(event) {
     if(this.events[event]){
       delete this.events[event];
     }
   };
 
-  M.prototype.find = function(selector, parent){
+  M.prototype.find = function(selector, parent) {
     if(parent){
       selector = parent + ' ' + selector;
     }
     return document.querySelectorAll(selector);
   };
 
-  M.prototype.parseElement = function(element){
+  M.prototype.parseElement = function(element) {
     var self = this;
 
     if( element.querySelectorAll ){
@@ -311,7 +329,7 @@
       }
     }
 
-    if( element.querySelectorAll ){
+    if (element.querySelectorAll) {
       var includes = element.querySelectorAll('[include]');
       if( includes.length ){
         forEach(includes, function(include){
@@ -322,7 +340,7 @@
     }
   };
 
-  M.prototype.initController = function(controller, parseDOM){
+  M.prototype.initController = function(controller, parseDOM) {
     var self = this,
     fn       = self.controllers[controller];
 
@@ -356,7 +374,7 @@
     }
   };
 
-  M.prototype.checkRoutes = function(){
+  M.prototype.checkRoutes = function() {
     var self = this;
 
     for(var i = 0; i < self.routes.length; i++){
@@ -383,7 +401,7 @@
           url = url.replace(basePath, '/');
         }
 
-        if( regex.test(url) || regex.test(url2) && route.template){
+        if (regex.test(url) || regex.test(url2) && route.template) {
           var params  = regex.exec(url) || [];
           temp_params = [];
 
@@ -398,15 +416,15 @@
 
           view = document.getElementsByTagName('view')[0];
 
-          if(view){
+          if (view) {
             loadTemplate(route.template, view);
           }
 
-          if(firePreController && self.__appController){
+          if (firePreController && self.__appController) {
             preController(self.__appController);
           }
 
-          if(route.controller && self.controllers[route.controller]){
+          if (route.controller && self.controllers[route.controller]) {
             self.initController(route.controller, false);
           }
 
@@ -417,9 +435,9 @@
     }
   };
 
-  M.prototype.route = function(routes){
+  M.prototype.route = function(routes) {
     var self = this;
-    for(var i = 0; i < routes.length; i++){
+    for (var i = 0; i < routes.length; i++) {
       var route = routes[i];
       self.routes.push({
         path: route.path,
@@ -430,17 +448,17 @@
     self.checkRoutes();
   };
 
-  M.navigate = function(path){
+  M.navigate = function(path) {
     var self = this;
     History.Adapter.pushState({ url: path }, document.title, path);
     self.checkRoutes();
   };
 
-  M.prototype.appController = function(fn){
+  M.prototype.appController = function(fn) {
     this.__appController = fn;
   };
 
-  M.prototype.controller = function(name, fn){
+  M.prototype.controller = function(name, fn) {
     var self               = this;
     self.controllers[name] = fn;
 
@@ -453,7 +471,7 @@
     }
   };
 
-  M.prototype.ajax = function(data){
+  M.prototype.ajax = function(data) {
     var xhr = new XMLHttpRequest(), formData;
 
     if( data.type ) {
@@ -466,9 +484,7 @@
       xhr.open(data.type || 'GET', data.url);
     }
 
-    return {
-
-    };
+    return {};
   };
 
   root.MNML = M;
