@@ -1,10 +1,10 @@
 var app = new MNML();
 
 app.route([
-  { path: '/', template: '/partials/home.html' },
-  { path: '/routing', template: '/partials/routing.html', controller: 'routing' },
-  { path: '/databinding(/:name)?', template: '/partials/databinding.html' },
-  { path: '/templates', template: '/partials/templates.html', controller: 'templates' }
+  { path: '/', template: 'partials/home.html' },
+  { path: '/routing', template: 'partials/routing.html', controller: 'routing' },
+  { path: '/databinding(/:name)?', template: 'partials/databinding.html' },
+  { path: '/templates', template: 'partials/templates.html', controller: 'templates' }
 ]);
 
 app.appController(function(data){
